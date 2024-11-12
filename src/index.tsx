@@ -30,7 +30,7 @@ type Extras = {
 };
 
 interface Image {
-  photoId: string;
+  id: string;
   status: 'draft' | 'uploaded' | 'failed';
   uri: string;
   type: string;
@@ -200,22 +200,22 @@ const uploadTask = async (taskData: TaskData) => {
           onSuccess &&
             onSuccess({
               ...response.data,
-              photoId: image?.photoId,
+              photoId: image?.id,
             });
           return {
-            photoId: image?.photoId,
+            photoId: image?.id,
             startTime,
             endTime,
           };
         })
         .catch((error) => {
           // Image upload failed
-          onFailure && onFailure(getError(error), image?.photoId);
+          onFailure && onFailure(getError(error), image?.id);
           failedImages.push(image);
           return new Promise((_, reject) => {
             reject({
               error: error?.message || 'Unknown error',
-              photoId: image?.photoId,
+              photoId: image?.id,
             });
           });
         });
@@ -243,17 +243,17 @@ const uploadTask = async (taskData: TaskData) => {
             onSuccess &&
               onSuccess({
                 ...response.data,
-                photoId: image?.photoId,
+                photoId: image?.id,
               });
             return response;
           })
           .catch((error) => {
-            onFailure && onFailure(getError(error), image?.photoId);
+            onFailure && onFailure(getError(error), image?.id);
             failedImages.push(image);
             return new Promise((_, reject) => {
               reject({
                 error: error?.message || 'Unknown error',
-                photoId: image?.photoId,
+                photoId: image?.id,
               });
             });
           });
@@ -287,17 +287,17 @@ const uploadTask = async (taskData: TaskData) => {
               onSuccess &&
                 onSuccess({
                   ...response.data,
-                  photoId: image?.photoId,
+                  photoId: image?.id,
                 });
               return response;
             })
             .catch((error) => {
-              onFailure && onFailure(getError(error), image?.photoId);
+              onFailure && onFailure(getError(error), image?.id);
               failedImages.push(image);
               return new Promise((_, reject) => {
                 reject({
                   error: error?.message || 'Unknown error',
-                  photoId: image?.photoId,
+                  photoId: image?.id,
                   retryCount,
                 });
               });
